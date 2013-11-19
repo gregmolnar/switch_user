@@ -2,6 +2,11 @@ class SwitchUserController < ApplicationController
   before_filter :developer_modes_only
 
   def set_current_user
+    if session[:original_user].nil? and SwitchUser.switch_back
+      provider.remember_current_user(true)
+    elsif !session[:original_user].nil?
+      session.delete(:original_user)
+    end
     handle_request(params)
 
     redirect_to(SwitchUser.redirect_path.call(request, params))
