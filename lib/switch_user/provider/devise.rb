@@ -7,7 +7,7 @@ module SwitchUser
       end
 
       def login(user, scope = :user)
-        @warden.set_user(user, :scope => scope)
+        @warden.set_user(user, scope: scope, run_callbacks: false)
       end
 
       def logout(scope = :user)
